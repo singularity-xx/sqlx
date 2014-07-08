@@ -209,6 +209,12 @@ func NewDb(db *sql.DB, driverName string) *DB {
 	return &DB{DB: db, driverName: driverName, Mapper: mapper()}
 }
 
+// NewTx returns a new sqlx Tx wrapper for a pre-existing *sql.Tx.  The
+// driverName of the original database is required for named query support.
+func NewTx(tx *sql.Tx, driverName string, unsafe bool) *Tx {
+	return &Tx{Tx: tx, driverName: driverName, unsafe: unsafe, Mapper: mapper()}
+}
+
 // DriverName returns the driverName passed to the Open function for this DB.
 func (db *DB) DriverName() string {
 	return db.driverName
